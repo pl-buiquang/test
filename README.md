@@ -1,92 +1,106 @@
-# fhir-eds-ig
+# AP-HP - EDS : Entrepôt de Données de Santé
 
+Le **AP-HP - EDS** (acronyme pour Entrepôt de Données de Santé de l'AP-HP) est une initiative visant à rassembler
+l'ensemble des connaissances sur les services FHIR de l'EDS de l'AP-HP dans un espace commun afin de partager.
 
+Ce référentiel contient le **AP-HP - EDS Implementation Guide (IG)**. Un IG est "un ensemble de règles sur comment les
+ressources FHIR sont utilisées (ou devraient être utilisées) pour résoudre un problème particulier, avec la
+documentation associée pour supporter et clarifier les usages" ([source](https://www.hl7.org/fhir/implementationguide.html)).
 
-## Getting started
+Pour plus d'information :
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+- Si vous êtes nouveau dans la communauté et l'écosystème FHIR, [ce tutoriel explique FHIR, le profilage, et les guides d'implementation](https://fire.ly/blog/how-to-create-your-first-fhir-profile/)
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+## Contexte
 
-## Add your files
+### Contexte métier du projet
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
+[A COMPLETER : doit contenir la description fonctionnelle du projet destinée à un profil non technique]
 
-```
-cd existing_repo
-git remote add origin https://gitlab.eds.aphp.fr/interop/fhir-eds-ig.git
-git branch -M main
-git push -uf origin main
-```
+### Contexte technique du projet
 
-## Integrate with your tools
+Ce guide d'implémentation présente les spécifications techniques du serveur FHIR de l'EDS de l'AP-HP.
 
-- [ ] [Set up project integrations](https://gitlab.eds.aphp.fr/interop/fhir-eds-ig/-/settings/integrations)
+[A COMPLETER : doit expliquer brièvement quelles ressources / profils sont utilisés, exemple implémentation où IG est utilisé]
 
-## Collaborate with your team
+## Construction de l'IG
 
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Automatically merge when pipeline succeeds](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
+"Construction de l'IG" signifie générer une représentation web, lisible par un humain, des informations structurées et
+de la documentation d'accompagnement définies dans ce référentiel. Cela se fait via le [FHIR Implementation Guide Publisher](https://confluence.hl7.org/display/FHIR/IG+Publisher+Documentation)
+("IG Publisher"), un programme Java fourni par l'équipe FHIR pour la construction de guides d'implementation dans une
+présentation standardisée.
 
-## Test and Deploy
+Si vous souhaitez le générer localement, ouvrez une fenêtre de commande et naviguer où le référentiel a été cloné.
+Exécutez ensuite cette commande :
 
-Use the built-in continuous integration in GitLab.
+- Linux/macOS: `./gradlew buildIG`
+- Windows: `.\gradlew.bat buildIG`
 
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing(SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
+Ce script fera automatiquement deux choses pour vous :
 
-***
+1. Exécuter [SUSHI](https://fshschool.org/docs/sushi/). AP-HP - EDS est développé en [FHIR Shorthand (FSH)](http://build.fhir.org/ig/HL7/fhir-shorthand/),
+   un langage spécifique de domaine (DSL) permettant de définir le contenu des FHIR IG. SUSHI transpile les fichiers FHS en
+   fichiers JSON attendus par IG Publisher
+2. Exécuter IG Publisher
 
-# Editing this README
+Vous aurez besoin d'une connexion Internet active pour construire l'IG. Cela prend jusqu'à 30 minutes pour construire
+pour la première fois ; les versions suivantes devraient être plus rapides (5 à 7 minutes) sur un ordinateur portable
+moderne.
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thank you to [makeareadme.com](https://www.makeareadme.com/) for this template.
+Lorsque la construction est terminée, vous pouvez ouvrir `output/index.html` dans votre navigateur pour voir l'IG
+construit localement.
 
-## Suggestions for a good README
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+### Dépendances pour la construction de l'IG
 
-## Name
-Choose a self-explaining name for your project.
+1. Vous avez besoin d'[installer java](https://adoptium.net/)
+2. Vous avez besoin d'[installer jekyll](https://jekyllrb.com/docs/installation/)
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+### Exécution de SUSHI indépendamment de l'IG Publisher
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+Si vous souhaitez exécuter SUSHI sans créer l'intégralité de l'IG, vous pouvez exécuter la tâche gradle `runSushi`.
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+### Obtenir une version propre
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+Bien que cela ne soit normalement pas nécessaire, vous pouvez supprimer les dossiers suivants pour obtenir une version
+propre :
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+- `fsh-generated/` (sortie SUSHI)
+- `output/` (sortie IG Publisher)
+- `input-cache/` (cache local de l'IG Publisher ; notez que sa suppression augmentera considérablement le temps de
+  génération de la prochaine version)
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+## Répertoires et fichiers clés dans l'IG
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+- Les fichiers FHIR Shorthand (`.fsh`) définissant les ressources dans cet IG se trouvent dans `input/fsh/`.
+    - Il existe une [extension de coloration syntaxique FSH](https://marketplace.visualstudio.com/items?itemName=MITRE-Health.vscode-language-fsh)
+      pour [VSCode](https://code.visualstudio.com).
+      Les fichiers FSH sont préfixés en fonction de ce qu'ils contiennent.
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
+| Prefix | Description          |
+|--------|----------------------|
+| 'AL'   | Aliases              |
+| 'CM'   | ConceptMap           |
+| 'DEF'  | Autres définitions   |
+| 'EX'   | Exemples             |
+| 'SD'   | StructureDefinitions |
+| 'VS'   | ValueSets            |
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
+- Les pages principales de l'IG construit sont générées à partir de [Markdown](https://daringfireball.net/projects/markdown/)
+  trouvé dans `input/pagecontent/`. Ces pages doivent également être incluses dans `sushi-config.yaml` pour être compilées
+  en HTML par l'IG Publisher.
+- Il existe un certain nombre d'autres options de configuration importantes dans `sushi-config.yaml`, y compris le
+  contenu du menu de l'IG construit.
+- La source des diagrammes UML dans l'IG se trouve dans `input/images-source/` et DOIT avoir une extension `.plantuml`.
+  Ceux-ci sont automatiquement convertis en SVG par l'éditeur IG et insérés en ligne dans les fichiers Markdown à l'aide
+  de `{%include some-diagram.svg%}` (qui correspond à `input/images-source/some-diagram.plantuml`).
 
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
+## Acronymes
 
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
+* IG : Implementation Guide
+* FHIR : Fast Healthcare Interoperability Resources
+* FIG : FHIR Implementation Guide
+* HL7 : Health Level Seven
+* AP-HP : Assistance Publique - Hôpitaux de Paris
+* EDS : Entrepôt de Données de Santé
 
-## License
-For open source projects, say how it is licensed.
-
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+[A COMPLETER : acronymes utilisés dans le cadre de ce projet]
