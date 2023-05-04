@@ -113,13 +113,15 @@ val installIGPublisher = tasks.register<Task>("installIGPublisher") {
 
 val buildIG = tasks.register<JavaExec>("buildIG") {
     group = "build"
-
     environment(
         "PATH",
-        "${System.getenv("PATH")};" +
-                "$rootDir/.gradle/nodejs/node-v${properties["nodeVersion"]}-" +
-                "${project.ext.get("os")}-${project.ext.get("arch")};" +
-                "$rootDir/node_modules/.bin"
+        listOf(
+            System.getenv("PATH"),
+            "$rootDir/.gradle/nodejs/node-v${properties["nodeVersion"]}-"+"${project.ext.get("os")}-${project.ext.get("arch")}",
+            "$rootDir/node_modules/.bin"
+        ).joinToString(
+            System.getProperties().getProperty("path.separator")
+        )
     )
     jvmArgs("-Dfile.encoding=UTF-8")
     classpath("input-cache/publisher.jar")
