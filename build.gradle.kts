@@ -45,8 +45,14 @@ project.ext.set(
     }
 )
 
+fun getVersionFromSushiConfig(): String {
+    val sushiConfig = File("sushi-config.yaml")
+    val version = sushiConfig.readLines().find { it.contains("version") }?.substringAfter("version: ")
+    return version ?: "unknown"
+}
+
 group = "fr.aphp"
-version = "0.0.1-SNAPSHOT"
+version = getVersionFromSushiConfig()
 
 node {
     download.set(true)

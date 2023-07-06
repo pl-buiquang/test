@@ -14,7 +14,7 @@ build-job:
     - HOST_PROXY="$HOST_PROXY"
     - PORT_PROXY="$PORT_PROXY"
     - ./gradlew -Dhttps.proxyHost=$HOST_PROXY -Dhttps.proxyPort=$PORT_PROXY buildIG
-    - echo "VERSION=$(grep -oPm2 "(?<=projectVersion=).*$" gradle.properties)" >> build.env
+    - echo "VERSION=$(grep -oPm2 "(?<=version:\ )\\d+\\.\\d+\\.\\d+.*$" sushi-config.yaml)" >> build.env
   artifacts:
     reports:
       dotenv: build.env
