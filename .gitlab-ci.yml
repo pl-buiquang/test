@@ -7,13 +7,13 @@ build-job:
   image:
     name: harbor.eds.aphp.fr/cohort360/genericbuilder:1.2.0
   script:
-    - HTTP_PROXY="http://$HOST_PROXY:$PORT_PROXY"
-    - HTTPS_PROXY="http://$HOST_PROXY:$PORT_PROXY"
-    - http_proxy="http://$HOST_PROXY:$PORT_PROXY"
-    - https_proxy="http://$HOST_PROXY:$PORT_PROXY"
-    - HOST_PROXY="$HOST_PROXY"
-    - PORT_PROXY="$PORT_PROXY"
-    - ./gradlew -Dhttps.proxyHost=$HOST_PROXY -Dhttps.proxyPort=$PORT_PROXY buildIG
+#    - HTTP_PROXY="http://$HOST_PROXY:$PORT_PROXY"
+#    - HTTPS_PROXY="http://$HOST_PROXY:$PORT_PROXY"
+#    - http_proxy="http://$HOST_PROXY:$PORT_PROXY"
+#    - https_proxy="http://$HOST_PROXY:$PORT_PROXY"
+#    - HOST_PROXY="$HOST_PROXY"
+#    - PORT_PROXY="$PORT_PROXY"
+    - ./gradlew buildIG
     - echo "VERSION=$(grep -oPm2 "(?<=version:\ )\\d+\\.\\d+\\.\\d+.*$" sushi-config.yaml)" >> build.env
   artifacts:
     reports:
