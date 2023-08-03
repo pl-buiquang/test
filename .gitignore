@@ -1,6 +1,6 @@
 .DS_Store
 .idea
-.gradle
+#.gradle
 Thumbs.db
 /fsh-generated
 /input-cache
