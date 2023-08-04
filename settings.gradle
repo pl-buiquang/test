@@ -1,0 +1,8 @@
+rootProject.name = "fhir-eds-ig"
+
+pluginManagement {
+    repositories {
+        mavenCentral()
+    }
+}
+

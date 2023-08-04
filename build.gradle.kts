@@ -7,9 +7,7 @@ import java.net.URI
 import java.nio.channels.Channels
 import java.nio.file.Paths
 
-repositories {
-    mavenCentral()
-}
+
 
 plugins {
     id("java")

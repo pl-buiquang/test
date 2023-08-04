@@ -1,1 +1,0 @@
-rootProject.name = "fhir-eds-ig"
