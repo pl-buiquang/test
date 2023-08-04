@@ -7,14 +7,13 @@ import java.net.URI
 import java.nio.channels.Channels
 import java.nio.file.Paths
 
+repositories {
+    mavenCentral()
+}
+
 plugins {
     id("java")
     id("com.github.node-gradle.node") version "3.5.1"
-}
-
-
-repositories {
-    mavenCentral()
 }
 
 val rootDir = Paths.get(
