@@ -15,7 +15,7 @@ build-job:
 #    - PORT_PROXY="$PORT_PROXY"
     - curl -LO https://services.gradle.org/distributions/gradle-8.0.2-bin.zip
     - unzip gradle-8.0.2-bin.zip
-    - ./gradle-8.0.2/bin/gradle buildIG
+    - ./gradle-8.0.2/bin/gradle --scan buildIG
 #    - ./gradlew buildIG
     - echo "VERSION=$(grep -oPm2 "(?<=version:\ )\\d+\\.\\d+\\.\\d+.*$" sushi-config.yaml)" >> build.env
   artifacts:
