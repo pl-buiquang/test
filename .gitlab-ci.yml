@@ -7,12 +7,6 @@ build-job:
   image:
     name: harbor.eds.aphp.fr/cohort360/genericbuilder:1.2.0
   script:
-#    - HTTP_PROXY="http://$HOST_PROXY:$PORT_PROXY"
-#    - HTTPS_PROXY="http://$HOST_PROXY:$PORT_PROXY"
-#    - http_proxy="http://$HOST_PROXY:$PORT_PROXY"
-#    - https_proxy="http://$HOST_PROXY:$PORT_PROXY"
-#    - HOST_PROXY="$HOST_PROXY"
-#    - PORT_PROXY="$PORT_PROXY"
     - curl -LO https://services.gradle.org/distributions/gradle-8.0.2-bin.zip
     - unzip gradle-8.0.2-bin.zip
     - ./gradle-8.0.2/bin/gradle --debug buildIG

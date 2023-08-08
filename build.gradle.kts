@@ -131,11 +131,6 @@ val buildIG = tasks.register<JavaExec>("buildIG") {
             System.getProperties().getProperty("path.separator")
         )
     )
-    if (System.getenv("HOST_PROXY") != null && System.getenv("PORT_PROXY") != null) {
-        val proxy_host = System.getenv("HOST_PROXY")
-        val proxy_port = System.getenv("PORT_PROXY")
-        jvmArgs("-Dhttp.proxyHost=${proxy_host}", "-Dhttp.proxyPort=${proxy_port}", "-Dhttps.proxyHost=${proxy_host}", "-Dhttps.proxyPort=${proxy_port}")
-    }
     jvmArgs("-Dfile.encoding=UTF-8")
     classpath("input-cache/publisher.jar")
     args = listOf("-ig", ".")
