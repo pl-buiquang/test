@@ -7,6 +7,7 @@ build-job:
   image:
     name: harbor.eds.aphp.fr/cohort360/genericbuilder:1.2.0
   script:
+    - env
     - curl -LO https://services.gradle.org/distributions/gradle-8.0.2-bin.zip
     - unzip gradle-8.0.2-bin.zip
     - curl https://plugins.gradle.org:443/m2/com/github/node-gradle/node/com.github.node-gradle.node.gradle.plugin/maven-metadata.xml -o maven-metadata.xml
