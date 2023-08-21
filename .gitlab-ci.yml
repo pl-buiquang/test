@@ -5,16 +5,14 @@ stages:
 build-job:
   stage: build
   image:
-    name: harbor.eds.aphp.fr/cohort360/genericbuilder:1.2.0
+    name: harbor.eds.aphp.fr/cohort360/genericbuilder:1.3.0
   script:
     - env
     - curl -LO https://services.gradle.org/distributions/gradle-8.0.2-bin.zip
     - unzip gradle-8.0.2-bin.zip
     - curl https://plugins.gradle.org:443/m2/com/github/node-gradle/node/com.github.node-gradle.node.gradle.plugin/maven-metadata.xml -o maven-metadata.xml
     - cat maven-metadata.xml
-    - HOST_PROXY="$HOST_PROXY"
-    - PORT_PROXY="$PORT_PROXY"
-    - ./gradle-8.0.2/bin/gradle --debug -Dhttps.proxyHost=$HOST_PROXY -Dhttps.proxyPort=$PORT_PROXY buildIG
+    - ./gradle-8.0.2/bin/gradle --debug buildIG
 #    - ./gradlew buildIG
     - echo "VERSION=$(grep -oPm2 "(?<=version:\ )\\d+\\.\\d+\\.\\d+.*$" sushi-config.yaml)" >> build.env
   artifacts:
