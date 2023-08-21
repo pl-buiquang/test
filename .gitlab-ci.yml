@@ -11,7 +11,7 @@ build-job:
     - unzip gradle-8.0.2-bin.zip
     - curl https://plugins.gradle.org:443/m2/com/github/node-gradle/node/com.github.node-gradle.node.gradle.plugin/maven-metadata.xml -o maven-metadata.xml
     - cat maven-metadata.xml
-    - HTTP_PROXY='' HTTPS_PROXY='' ./gradle-8.0.2/bin/gradle --debug buildIG
+    - HTTP_PROXY='' HTTPS_PROXY='' http_proxy='' https_proxy='' ./gradle-8.0.2/bin/gradle --debug buildIG
 #    - ./gradlew buildIG
     - echo "VERSION=$(grep -oPm2 "(?<=version:\ )\\d+\\.\\d+\\.\\d+.*$" sushi-config.yaml)" >> build.env
   artifacts:
